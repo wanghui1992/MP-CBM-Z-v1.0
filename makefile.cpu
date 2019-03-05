@@ -1,0 +1,58 @@
+#makefile
+
+MMPM_EXE= cbmz_base.cpu.fast
+GAS_SRC = ./gaschem
+GAS_INC = ./gaschem
+LIBS = 
+
+#AVX = -xCORE-AVX512 -fp-model fast=1#precise
+AVX = -xHost -fp-model fast=1 #precise
+
+OPT0 = -O3 -DDEBUG $(AVX) -ip 
+
+# loop interchange
+#
+OPT6 = -DKNL_OPT -DVEC_OPT
+# Vtune API
+#VTAPI_INC=$(VTUNE_AMPLIFIER_XE_2017_DIR)/include/intel64
+#VTAPI_LIB=$(VTUNE_AMPLIFIER_XE_2017_DIR)/lib64/libittnotify.a
+
+OPT1 = -qopt-report=5 -align array64byte
+
+OPT5 = -qopenmp #-DOMP_OPT 
+
+FC = ifort -cpp 
+FFLAGS= $(OPT6) $(OPT1) $(OPT2) $(OPT3) -I$(GAS_SRC) $(OPT0) -w -ftz -fno-alias -fno-fnalias -g -c 
+LDFLAGS= $(OPT6) $(OPT1) $(OPT2) $(OPT3) -I$(GAS_SRC) $(OPT0) -w -ftz -fno-alias -fno-fnalias -g $(OPT7) 
+
+# 
+MMPM_SRC = main.f90 \
+	$(GAS_SRC)/cbmz.f90
+	#$(GAS_SRC)/chm1.inc   \
+	$(GAS_SRC)/gas1.inc   \
+
+MMPM_OBJ=$(patsubst %.F,%.o,$(patsubst %.F90,%.o,$(patsubst %.f,%.o,$(patsubst %.f90,%.o,$(MMPM_SRC)))))
+MMPM_REPORT=$(patsubst %.o,%.optrpt,$(MMPM_OBJ))
+
+all: $(MMPM_EXE)
+
+$(MMPM_EXE): $(MMPM_OBJ)
+	$(FC) $(OPT5) $(LDFLAGS) $^ $(VTAPI_LIB) -o $@
+	mv $(MMPM_EXE) ../bin
+main.o:main.f90 $(GAS_SRC)/cbmz.o 
+	$(FC) $(OPT5) -I$(VTAPI_INC) $(FFLAGS) $< -o $@
+$(GAS_SRC)/cbmz.o:$(GAS_SRC)/cbmz.f90
+	$(FC) $(OPT5) $(OPT4) $(FFLAGS) $< -o $@
+
+%.o:%.f
+	$(FC) $(FFLAGS) $< -o $@
+%.o:%.f90
+	$(FC) $(FFLAGS) $< -o $@
+%.o:%.F
+	$(FC) $(FFLAGS) $< -o $@
+%.o:%.F90
+	$(FC) $(FFLAGS) $< -o $@
+
+clean:
+	rm -f $(MMPM_OBJ) $(MMPM_EXE) *.mod $(MMPM_REPORT) ipo_out.optrpt
+

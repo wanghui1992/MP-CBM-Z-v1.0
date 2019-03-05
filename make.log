@@ -1,0 +1,95 @@
+ifort -cpp  -qopenmp  -I -DKNL_OPT -DVEC_OPT -qopt-report=5 -align array64byte   -I./gaschem -O0 -DDEBUG -xCORE-AVX2 -fp-model fast=1  -ip  -w -ftz -fno-alias -fno-fnalias -g -c  main.f90 -o main.o
+ifort: remark #10397: optimization reports are generated in *.optrpt files in the output location
+./gaschem/gas1.inc(37): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_COM]
+      parameter(nreg1 = ngas_com, &
+------------------------^
+./gaschem/gas1.inc(38): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_COM]
+                nreg2 = ngas_com + ngas_urb, &
+------------------------^
+./gaschem/gas1.inc(38): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_URB]
+                nreg2 = ngas_com + ngas_urb, &
+-----------------------------------^
+./gaschem/gas1.inc(39): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_COM]
+                nreg3 = ngas_com + ngas_urb + ngas_bio, &
+------------------------^
+./gaschem/gas1.inc(39): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_URB]
+                nreg3 = ngas_com + ngas_urb + ngas_bio, &
+-----------------------------------^
+./gaschem/gas1.inc(39): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_BIO]
+                nreg3 = ngas_com + ngas_urb + ngas_bio, &
+----------------------------------------------^
+./gaschem/gas1.inc(40): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_COM]
+                nreg4 = ngas_com + ngas_mar, &
+------------------------^
+./gaschem/gas1.inc(40): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_MAR]
+                nreg4 = ngas_com + ngas_mar, &
+-----------------------------------^
+./gaschem/gas1.inc(41): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_COM]
+                nreg5 = ngas_com + ngas_urb + ngas_mar, &
+------------------------^
+./gaschem/gas1.inc(41): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_URB]
+                nreg5 = ngas_com + ngas_urb + ngas_mar, &
+-----------------------------------^
+./gaschem/gas1.inc(41): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_MAR]
+                nreg5 = ngas_com + ngas_urb + ngas_mar, &
+----------------------------------------------^
+./gaschem/gas1.inc(42): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_COM]
+                nreg6 = ngas_com + ngas_urb + ngas_bio + ngas_mar)
+------------------------^
+./gaschem/gas1.inc(42): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_URB]
+                nreg6 = ngas_com + ngas_urb + ngas_bio + ngas_mar)
+-----------------------------------^
+./gaschem/gas1.inc(42): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_BIO]
+                nreg6 = ngas_com + ngas_urb + ngas_bio + ngas_mar)
+----------------------------------------------^
+./gaschem/gas1.inc(42): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_MAR]
+                nreg6 = ngas_com + ngas_urb + ngas_bio + ngas_mar)
+---------------------------------------------------------^
+./gaschem/chm1.inc(6): error #6406: Conflicting attributes or multiple declaration of name.   [NGAS_MAX]
+      parameter(ngas_max = ngas_com + ngas_urb + ngas_bio + ngas_mar)
+----------------^
+./gaschem/chm1.inc(8): error #6592: This symbol must be a defined parameter, an enumerator, or an argument of an inquiry function that evaluates to a compile-time constant.   [NGAS_MAX]
+      parameter(nmax = ngas_max)
+-----------------------^
+main.f90(25): error #6792: The rank of the allocate-shape-spec-list differs from the rank of the allocate-object.   [GRLAT]
+      allocate(grlat(nx,ny,nzz,),grlon(nx,ny,nzz,),gte(nx,ny,nzz,),&
+---------------^
+main.f90(25): error #6726: An explicit-shape-spec in an ALLOCATE statement is incorrect.   [GRLAT]
+      allocate(grlat(nx,ny,nzz,),grlon(nx,ny,nzz,),gte(nx,ny,nzz,),&
+---------------^
+main.f90(25): error #6792: The rank of the allocate-shape-spec-list differs from the rank of the allocate-object.   [GRLON]
+      allocate(grlat(nx,ny,nzz,),grlon(nx,ny,nzz,),gte(nx,ny,nzz,),&
+---------------------------------^
+main.f90(25): error #6726: An explicit-shape-spec in an ALLOCATE statement is incorrect.   [GRLON]
+      allocate(grlat(nx,ny,nzz,),grlon(nx,ny,nzz,),gte(nx,ny,nzz,),&
+---------------------------------^
+main.f90(25): error #6792: The rank of the allocate-shape-spec-list differs from the rank of the allocate-object.   [GTE]
+      allocate(grlat(nx,ny,nzz,),grlon(nx,ny,nzz,),gte(nx,ny,nzz,),&
+---------------------------------------------------^
+main.f90(25): error #6726: An explicit-shape-spec in an ALLOCATE statement is incorrect.   [GTE]
+      allocate(grlat(nx,ny,nzz,),grlon(nx,ny,nzz,),gte(nx,ny,nzz,),&
+---------------------------------------------------^
+main.f90(26): error #6792: The rank of the allocate-shape-spec-list differs from the rank of the allocate-object.   [GRH]
+               gRH(nx,ny,nzz,),gpr_atm(nx,ny,nzz,),gzalt_m(nx,ny,nzz,))
+---------------^
+main.f90(26): error #6726: An explicit-shape-spec in an ALLOCATE statement is incorrect.   [GRH]
+               gRH(nx,ny,nzz,),gpr_atm(nx,ny,nzz,),gzalt_m(nx,ny,nzz,))
+---------------^
+main.f90(26): error #6792: The rank of the allocate-shape-spec-list differs from the rank of the allocate-object.   [GPR_ATM]
+               gRH(nx,ny,nzz,),gpr_atm(nx,ny,nzz,),gzalt_m(nx,ny,nzz,))
+-------------------------------^
+main.f90(26): error #6726: An explicit-shape-spec in an ALLOCATE statement is incorrect.   [GPR_ATM]
+               gRH(nx,ny,nzz,),gpr_atm(nx,ny,nzz,),gzalt_m(nx,ny,nzz,))
+-------------------------------^
+main.f90(26): error #6792: The rank of the allocate-shape-spec-list differs from the rank of the allocate-object.   [GZALT_M]
+               gRH(nx,ny,nzz,),gpr_atm(nx,ny,nzz,),gzalt_m(nx,ny,nzz,))
+---------------------------------------------------^
+main.f90(26): error #6726: An explicit-shape-spec in an ALLOCATE statement is incorrect.   [GZALT_M]
+               gRH(nx,ny,nzz,),gpr_atm(nx,ny,nzz,),gzalt_m(nx,ny,nzz,))
+---------------------------------------------------^
+main.f90(54): error #6514: Substring or array slice notation requires CHARACTER type or array.   [FCLD]
+      fcld(:) = 1.0
+------^
+/tmp/ifortYfFnrS.i90(307): catastrophic error: Too many errors, exiting
+compilation aborted for main.f90 (code 1)
+make: *** [main.o] 错误 1
